@@ -22,7 +22,7 @@ export default Hoje
 
 
 const Tela = styled.div`
-    background-color: red;
+    background-color: #F2F2F2;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
