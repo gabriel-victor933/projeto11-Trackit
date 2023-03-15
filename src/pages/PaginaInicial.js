@@ -15,7 +15,7 @@ const PaginaInicial = () => {
     function handleSubmit(e){
         e.preventDefault()
 
-        const info = {email: email, password: password}
+        const info = {email, password}
 
         setDisabled(true)
 
