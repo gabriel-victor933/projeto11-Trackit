@@ -2,53 +2,55 @@ import styled from "styled-components"
 import logo from "../constant/images/logo.jpg"
 import { Link } from "react-router-dom"
 import { useState } from "react"
-import { URLlogin} from "../constant/images/urls"
+import { URLsignup } from "../constant/images/urls"
 import axios from "axios"
 import {ThreeDots} from "react-loader-spinner"
 
-const PaginaInicial = () => {
+
+const Cadastro = () =>{
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [name, setName] = useState("")
+    const [image, setImage] = useState("")
     const [disabled,setDisabled] = useState(false)
 
     function handleSubmit(e){
-        e.preventDefault()
 
-        const info = {email: email, password: password}
+        e.preventDefault()
 
         setDisabled(true)
 
-        axios.post(URLlogin,info)
-        .then((data)=> {setDisabled(false)})
-        .catch((err) => {
-            setDisabled(false)
-            alert(err.message)
+        const infos = {email, name, image, password}
 
-        })
-    }   
-    console.log(disabled)
+        
+
+
+    }
 
     return (
         <Tela>
-            <img src={logo} alt="logo" />
-            <form onSubmit={handleSubmit}>
-                <input type="email" placeholder="email" required onChange={(e) => setEmail(e.target.value)} value={email} disabled={disabled}/>
-                <input type="password" placeholder="senha" required onChange={(e) => setPassword(e.target.value)} value={password} disabled={disabled}/> 
-                <button type="submit" disabled={disabled}>{
-                    disabled == false ? "Entrar" : <ThreeDots height="50" width="50" radius="9" color="#ffffff" ariaLabel="three-dots-loading" wrapperStyle={{}}wrapperClassName="" visible={true}/>
-            }</button>
-            </form>
+        <img src={logo} alt="logo" />
+        <form onSubmit={handleSubmit}>
+            <input type="email" placeholder="email" required onChange={(e) => setEmail(e.target.value)} value={email} disabled={disabled}/>
+            <input type="password" placeholder="senha" required onChange={(e) => setPassword(e.target.value)} value={password} disabled={disabled}/> 
+            <input type="text" placeholder="nome" required onChange={(e) => setName(e.target.value)} value={name} disabled={disabled}/> 
+            <input type="url" placeholder="foto" required onChange={(e) => setImage(e.target.value)} value={image} disabled={disabled}/> 
 
-            <Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
+            <button type="submit" disabled={disabled}>{
+                disabled == false ? "Cadastrar" : <ThreeDots height="50" width="50" radius="9" color="#ffffff" ariaLabel="three-dots-loading" wrapperStyle={{}}wrapperClassName="" visible={true}/>
+        }</button>
+        </form>
+
+        <Link to="/">Já tem uma conta? Faça login!</Link>
 
 
-        </Tela>
+
+    </Tela>
     )
-
 }
 
-export default PaginaInicial
+export default Cadastro
 
 const Tela = styled.div`
     background-color: white;

@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Reset from "./style/Reset";
+import GlobalStyle from "./style/GlobalStyle";
 import PaginaInicial from "./pages/PaginaInicial";
-import Reset from "./constant/Reset";
-import GlobalStyle from "./constant/GlobalStyle";
-import styled from "styled-components";
+import Cadastro from "./pages/Cadastro";
+
 
 export default function App() {
   return (
@@ -11,6 +12,8 @@ export default function App() {
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<PaginaInicial />}/> 
+        <Route path="/cadastro" element={<Cadastro/>}/> 
+        <Route path="/hoje" element={<div>hoje</div>}/> 
       </Routes>
       </BrowserRouter>
   );
