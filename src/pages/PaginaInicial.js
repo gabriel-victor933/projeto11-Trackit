@@ -1,16 +1,23 @@
 import styled from "styled-components"
 import logo from "../constant/images/logo.jpg"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { URLlogin} from "../constant/images/urls"
 import axios from "axios"
 import {ThreeDots} from "react-loader-spinner"
+import { useContext } from "react"
+import { AppContext } from "../Context"
 
 const PaginaInicial = () => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [disabled,setDisabled] = useState(false)
+
+    const navigate = useNavigate()
+
+    const { setPerfil } = useContext(AppContext)
+
 
     function handleSubmit(e){
         e.preventDefault()
@@ -20,14 +27,16 @@ const PaginaInicial = () => {
         setDisabled(true)
 
         axios.post(URLlogin,info)
-        .then((data)=> {setDisabled(false)})
+        .then((res)=> {
+            setPerfil(res.data)
+            navigate("/hoje")
+        })
         .catch((err) => {
             setDisabled(false)
             alert(err.message)
 
         })
     }   
-    console.log(disabled)
 
     return (
         <Tela>
