@@ -1,14 +1,58 @@
 import styled from "styled-components"
+import {useState} from "react"
+import { URLhabits } from "../../constant/images/urls"
+import axios from "axios"
 
-const Criar = () => {
+const Criar = ({config, setMenu, habito, setHabito, selecionados, setSelecionados, carregarHabitos}) => {
 
+    const [disabled, setDisabled] = useState(false)
     const dias = ["D", "S","T","Q", "Q", "S","S"]
+
+    
+
+    function handleSelecionados(indexDia){
+        let novo = [...selecionados]
+
+
+        if(!novo.includes(indexDia) || novo.length == 0){
+            novo.push(indexDia)
+        } else {
+            novo = novo.filter(i => i != indexDia)
+        }
+
+        setSelecionados(novo)
+    }
+
+    function criarHabito(){
+
+        const info = {
+            name: habito,
+            days: selecionados// segunda, quarta e sexta
+        }
+
+        setDisabled(true)
+
+        axios.post(URLhabits,info,config)
+        .then((dados)=> {
+            console.log(dados)
+            setMenu(false)
+            setHabito("")
+            setSelecionados([])
+            carregarHabitos()
+            setDisabled(false)
+
+        })
+        .catch((erro) => {
+            setDisabled(false)
+            alert(erro.response.data.message)
+        })
+    }
 
     return (
         <Container>
-            <input placeholder="Nome do Hábito"/>
-            <div className="dias">{dias.map((d,i)=> <button key={i}>{d}</button>)}</div>
-            <div className="botoes"><button>Cancelar</button><button>Salvar</button></div>
+            <input disabled={disabled} placeholder="Nome do Hábito" onChange={(e) => setHabito(e.target.value)} value={habito}/>
+            <div className="dias">{dias.map((d,i)=> <Botao disabled={disabled} selecionado={selecionados.includes(i+1)} key={i} onClick={() => handleSelecionados(i+1)}>{d}</Botao>)}</div>
+            <div className="botoes"><button disabled={disabled} onClick={() => setMenu(false)}>Cancelar</button><button disabled={disabled} onClick={criarHabito}>Salvar</button></div>
 
         </Container>
     )
@@ -48,33 +92,17 @@ const Container = styled.div`
         ::placeholder{
                 color: #DBDBDB;
             }
+
+        :disabled{
+                background: #F2F2F2;
+            }
     }
 
-    .dias {
-        
-        
-
-        button {
-            width: 30px;
-            height: 30px;
-            font-family: 'Lexend Deca';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 19.976px;
-            line-height: 25px;
-            color: #DBDBDB;
-            background-color: #ffffff;
-            border: 1px solid #D5D5D5;
-            border-radius: 5px;
-            margin-right: 4px;
-        }
-
-
-    }
 
     .botoes {
         align-self: flex-end;
         margin-top: 30px;
+
 
         
 
@@ -92,6 +120,10 @@ const Container = styled.div`
             border: none;
             margin-left: 15px;
 
+            :disabled {
+                opacity: 0.7;
+            }
+
             
         }
 
@@ -101,4 +133,19 @@ const Container = styled.div`
         }
     }
 
+`;
+
+const Botao = styled.button`
+            width: 30px;
+            height: 30px;
+            font-family: 'Lexend Deca';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 19.976px;
+            line-height: 25px;
+            border: 1px solid #D5D5D5;
+            border-radius: 5px;
+            margin-right: 4px;
+            color: ${props => props.selecionado ? "#ffffff" : "#DBDBDB"};
+            background-color: ${props => props.selecionado ? "#DBDBDB" : "#ffffff"};
 `;

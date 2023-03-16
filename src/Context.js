@@ -13,9 +13,15 @@ const AppProvider = ({children}) => {
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODI0OSwiaWF0IjoxNjc4OTAwNzI2fQ.3h365qG4QnPB0d0jWGQgZgRPYsFewF8lCgt1ovJy2xw"
     })
 
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${perfil.token}`
+        }
+    }
+
 
     return (
-        <AppContext.Provider value={{perfil, setPerfil}}>
+        <AppContext.Provider value={{perfil, setPerfil, config}}>
             {children}
         </AppContext.Provider>
     )

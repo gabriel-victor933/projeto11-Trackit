@@ -13,22 +13,23 @@ const Habitos = () => {
 
     const [habitos, sethabitos] = useState([])
     const [menu, setMenu] = useState(false)
+    const [habito, setHabito] = useState("")
+    const [selecionados, setSelecionados] = useState("")
 
-    const {perfil} = useContext(AppContext)
+    const { config} = useContext(AppContext)
 
-    const config = {
-        headers: {
-            "Authorization": `Bearer ${perfil.token}`
-        }
-    }
-
-    useEffect(()=>{
+    function carregarHabitos(){
 
         axios.get(URLhabits,config)
         .then((dados) => {
             sethabitos(dados.data)
         })
         .catch((erro) => console.log(erro))
+    }
+
+    useEffect(()=>{
+
+        carregarHabitos()
 
     },[])
 
@@ -43,7 +44,7 @@ const Habitos = () => {
                     <button onClick={() => setMenu(true)}><p>+</p></button>
                 </div>
 
-                {menu && <Criar />}
+                {menu && <Criar carregarHabitos={carregarHabitos} config={config} setMenu={setMenu} habito={habito} setHabito={setHabito} selecionados={selecionados} setSelecionados={setSelecionados}/>}
 
                 <div className="lista">
                     {habitos.length === 0 ? <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p> : habitos.map((h)=> (<Habito />))}
