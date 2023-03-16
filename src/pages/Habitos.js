@@ -33,7 +33,6 @@ const Habitos = () => {
 
     },[])
 
-    console.log(habitos)
 
     return (
             <>            
@@ -47,7 +46,7 @@ const Habitos = () => {
                 {menu && <Criar carregarHabitos={carregarHabitos} config={config} setMenu={setMenu} habito={habito} setHabito={setHabito} selecionados={selecionados} setSelecionados={setSelecionados}/>}
 
                 <div className="lista">
-                    {habitos.length === 0 ? <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p> : habitos.map((h)=> (<Habito />))}
+                    {habitos.length === 0 ? <Nenhum /> : habitos.map((h)=> (<Habito key={h.id} habito={h} config={config} carregarHabitos={carregarHabitos}/>))}
                 </div>
             </Tela>
             <Footer /> 
@@ -67,7 +66,7 @@ const Tela = styled.div`
     width: 100%;
     min-height: 100vh;
     box-sizing: border-box;
-    padding-top: 70px;
+    padding: 70px 0px;
 
     .title {
         width: 90%;
@@ -111,3 +110,10 @@ const Tela = styled.div`
         }
     }
 `;
+
+const Nenhum = () => {
+
+    return (
+<p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+    )
+}

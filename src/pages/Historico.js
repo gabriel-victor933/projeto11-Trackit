@@ -26,5 +26,5 @@ const Tela = styled.div`
     width: 100%;
     min-height: 100vh;
     box-sizing: border-box;
-    padding-top: 70px;
+    padding: 70px 0px;
 `;
