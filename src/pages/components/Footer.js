@@ -7,8 +7,8 @@ const Footer = () => {
 
     return (
         <Menu>
-            <Link to="/">Hábitos</Link>
-            <Link to="/" className="progress-bar">
+            <Link to="/habitos">Hábitos</Link>
+            <Link to="/hoje" className="progress-bar">
                 <CircularProgressbar
                     value={50}
                     text={"hoje"}
@@ -25,14 +25,14 @@ const Footer = () => {
                 ></CircularProgressbar>
             </Link>
             
-            <Link to="/">Histórico</Link>
+            <Link to="/historico">Histórico</Link>
         </Menu>
     )
 }
 
 export default Footer
 
-const Menu = styled.div`
+const Menu = styled.footer`
     width: 100%;
     height: 70px;
     background-color: #ffffff;

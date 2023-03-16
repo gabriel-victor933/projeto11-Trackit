@@ -1,27 +1,21 @@
-import { useContext } from "react"
-import { AppContext } from "../Context"
 import Footer from "./components/Footer"
 import Header from "./components/Header"
 import styled from "styled-components"
 
-const Hoje = () => {
-
-    const { perfil } = useContext(AppContext)
-
+const Historico = () => {
 
     return (
-        <>
-        <Header />
-        <Tela>
-            <div>Hoje</div>
-        </Tela>
-        <Footer />
-        </>
+            <>
+            <Header />
+            <Tela>
+                <div>Historico</div>
+            </Tela>
+            <Footer /> 
+            </>
     )
 }
 
-export default Hoje
-
+export default Historico
 
 const Tela = styled.div`
     background-color: #F2F2F2;
