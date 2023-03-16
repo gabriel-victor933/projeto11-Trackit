@@ -8,7 +8,8 @@ const Historico = () => {
             <>
             <Header />
             <Tela>
-                <div>Historico</div>
+                <h1>Histórico</h1>
+                <p>Em breve você poderá ver o histórico dos seus hábitos aqui!</p>
             </Tela>
             <Footer /> 
             </>
@@ -27,4 +28,26 @@ const Tela = styled.div`
     min-height: 100vh;
     box-sizing: border-box;
     padding: 70px 0px;
+    
+
+    h1 {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 22.976px;
+        line-height: 29px;
+        color: #126BA5;
+        text-align: left;
+        width: 90%;
+        margin: 20px 0px;
+    }
+
+    p {
+        width: 90%;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 17.976px;
+        line-height: 22px;
+
+        color: #666666;
+    }
 `;

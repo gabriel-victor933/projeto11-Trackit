@@ -34,7 +34,6 @@ const Criar = ({config, setMenu, habito, setHabito, selecionados, setSelecionado
 
         axios.post(URLhabits,info,config)
         .then((dados)=> {
-            console.log(dados)
             setMenu(false)
             setHabito("")
             setSelecionados([])
