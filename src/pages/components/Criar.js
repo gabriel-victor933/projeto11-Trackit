@@ -32,6 +32,8 @@ const Criar = ({config, setMenu, habito, setHabito, selecionados, setSelecionado
 
         setDisabled(true)
 
+        console.log(info)
+
         axios.post(URLhabits,info,config)
         .then((dados)=> {
             setMenu(false)
@@ -50,7 +52,7 @@ const Criar = ({config, setMenu, habito, setHabito, selecionados, setSelecionado
     return (
         <Container data-test="habit-create-container">
             <input data-test="habit-name-input" disabled={disabled} placeholder="Nome do Hábito" onChange={(e) => setHabito(e.target.value)} value={habito}/>
-            <div className="dias">{dias.map((d,i)=> <Botao data-test="habit-day" disabled={disabled} selecionado={selecionados.includes(i+1)} key={i} onClick={() => handleSelecionados(i+1)}>{d}</Botao>)}</div>
+            <div className="dias">{dias.map((d,i)=> <Botao data-test="habit-day" disabled={disabled} selecionado={selecionados.includes(i)} key={i} onClick={() => handleSelecionados(i)}>{d}</Botao>)}</div>
             <div className="botoes"><button data-test="habit-create-cancel-btn" disabled={disabled} onClick={() => setMenu(false)}>Cancelar</button><button data-test="habit-create-save-btn" disabled={disabled} onClick={criarHabito}>Salvar</button></div>
 
         </Container>
