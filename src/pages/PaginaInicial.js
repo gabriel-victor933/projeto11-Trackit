@@ -2,7 +2,7 @@ import styled from "styled-components"
 import logo from "../constant/images/logo.jpg"
 import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
-import { URLlogin} from "../constant/images/urls"
+import { URLlogin} from "../constant/urls"
 import axios from "axios"
 import {ThreeDots} from "react-loader-spinner"
 import { useContext } from "react"
@@ -42,14 +42,14 @@ const PaginaInicial = () => {
         <Tela>
             <img src={logo} alt="logo" />
             <form onSubmit={handleSubmit}>
-                <input type="email" placeholder="email" required onChange={(e) => setEmail(e.target.value)} value={email} disabled={disabled}/>
-                <input type="password" placeholder="senha" required onChange={(e) => setPassword(e.target.value)} value={password} disabled={disabled}/> 
-                <button type="submit" disabled={disabled}>{
+                <input data-test="email-input" type="email" placeholder="email" required onChange={(e) => setEmail(e.target.value)} value={email} disabled={disabled}/>
+                <input data-test="password-input" type="password" placeholder="senha" required onChange={(e) => setPassword(e.target.value)} value={password} disabled={disabled}/> 
+                <button data-test="login-btn" type="submit" disabled={disabled}>{
                     disabled == false ? "Entrar" : <ThreeDots height="50" width="50" radius="9" color="#ffffff" ariaLabel="three-dots-loading" wrapperStyle={{}}wrapperClassName="" visible={true}/>
             }</button>
             </form>
 
-            <Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
+            <Link data-test="signup-link" to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
 
 
         </Tela>

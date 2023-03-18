@@ -2,7 +2,7 @@ import styled from "styled-components"
 import logo from "../constant/images/logo.jpg"
 import { Link,useNavigate } from "react-router-dom"
 import { useState } from "react"
-import { URLsignup } from "../constant/images/urls"
+import { URLsignup } from "../constant/urls"
 import axios from "axios"
 import {ThreeDots} from "react-loader-spinner"
 
@@ -43,17 +43,17 @@ const Cadastro = () =>{
         <Tela>
         <img src={logo} alt="logo" />
         <form onSubmit={handleSubmit}>
-            <input type="email" placeholder="email" required onChange={(e) => setEmail(e.target.value)} value={email} disabled={disabled}/>
-            <input type="password" placeholder="senha" required onChange={(e) => setPassword(e.target.value)} value={password} disabled={disabled}/> 
-            <input type="text" placeholder="nome" required onChange={(e) => setName(e.target.value)} value={name} disabled={disabled}/> 
-            <input type="url" placeholder="foto" required onChange={(e) => setImage(e.target.value)} value={image} disabled={disabled}/> 
+            <input data-test="email-input" type="email" placeholder="email" required onChange={(e) => setEmail(e.target.value)} value={email} disabled={disabled}/>
+            <input data-test="password-input" type="password" placeholder="senha" required onChange={(e) => setPassword(e.target.value)} value={password} disabled={disabled}/> 
+            <input data-test="user-name-input" type="text" placeholder="nome" required onChange={(e) => setName(e.target.value)} value={name} disabled={disabled}/> 
+            <input data-test="user-image-input" type="url" placeholder="foto" required onChange={(e) => setImage(e.target.value)} value={image} disabled={disabled}/> 
 
-            <button type="submit" disabled={disabled}>{
+            <button data-test="signup-input" type="submit" disabled={disabled}>{
                 disabled == false ? "Cadastrar" : <ThreeDots height="50" width="50" radius="9" color="#ffffff" ariaLabel="three-dots-loading" wrapperStyle={{}}wrapperClassName="" visible={true}/>
         }</button>
         </form>
 
-        <Link to="/">Já tem uma conta? Faça login!</Link>
+        <Link data-test="login-link" to="/">Já tem uma conta? Faça login!</Link>
 
 
 

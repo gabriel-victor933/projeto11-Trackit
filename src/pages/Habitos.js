@@ -1,7 +1,7 @@
 import Footer from "./components/Footer"
 import Header from "./components/Header"
 import styled from "styled-components"
-import { URLhabits } from "../constant/images/urls"
+import { URLhabits } from "../constant/urls"
 import { useEffect, useContext, useState } from "react"
 import { AppContext } from "../Context"
 import axios from "axios"
@@ -40,7 +40,7 @@ const Habitos = () => {
             <Tela>
                 <div className="title">
                     <h1>Meus hábitos</h1>
-                    <button onClick={() => setMenu(true)}><p>+</p></button>
+                    <button data-test="habit-create-btn" onClick={() => setMenu(true)}><p>+</p></button>
                 </div>
 
                 {menu && <Criar carregarHabitos={carregarHabitos} config={config} setMenu={setMenu} habito={habito} setHabito={setHabito} selecionados={selecionados} setSelecionados={setSelecionados}/>}

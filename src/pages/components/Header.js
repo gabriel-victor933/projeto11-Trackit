@@ -7,7 +7,7 @@ const Header = () => {
     const {perfil} = useContext(AppContext)
 
     return (
-        <Block>
+        <Block data-test="header">
             <p>TrackIt</p>
             <img src={perfil.image}/>
         </Block>

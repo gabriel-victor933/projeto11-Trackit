@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { BsTrash } from "react-icons/bs";
-import { URLhabits } from "../../constant/images/urls";
+import { URLhabits } from "../../constant/urls";
 import axios from "axios";
 
 const Habito = ({habito, config, carregarHabitos}) => {
@@ -24,10 +24,10 @@ const Habito = ({habito, config, carregarHabitos}) => {
     }
 
     return (
-        <Card>
-            <h1>{name}</h1>
-            <div>{dias.map((d,i)=> <Botao selecionado={days.includes(i+1)} key={i}>{d}</Botao>)}</div>
-            <div className="icone"><BsTrash onClick={removerHabito}/></div>
+        <Card data-test="habit-container">
+            <h1 data-test="habit-name">{name}</h1>
+            <div>{dias.map((d,i)=> <Botao data-test="habit-day" selecionado={days.includes(i+1)} key={i}>{d}</Botao>)}</div>
+            <div className="icone"><BsTrash data-test="habit-delete-btn" onClick={removerHabito}/></div>
         </Card>
     )
 

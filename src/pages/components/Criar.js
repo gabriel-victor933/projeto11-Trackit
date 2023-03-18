@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import {useState} from "react"
-import { URLhabits } from "../../constant/images/urls"
+import { URLhabits } from "../../constant/urls"
 import axios from "axios"
 
 const Criar = ({config, setMenu, habito, setHabito, selecionados, setSelecionados, carregarHabitos}) => {
@@ -48,10 +48,10 @@ const Criar = ({config, setMenu, habito, setHabito, selecionados, setSelecionado
     }
 
     return (
-        <Container>
-            <input disabled={disabled} placeholder="Nome do Hábito" onChange={(e) => setHabito(e.target.value)} value={habito}/>
-            <div className="dias">{dias.map((d,i)=> <Botao disabled={disabled} selecionado={selecionados.includes(i+1)} key={i} onClick={() => handleSelecionados(i+1)}>{d}</Botao>)}</div>
-            <div className="botoes"><button disabled={disabled} onClick={() => setMenu(false)}>Cancelar</button><button disabled={disabled} onClick={criarHabito}>Salvar</button></div>
+        <Container data-test="habit-create-container">
+            <input data-test="habit-name-input" disabled={disabled} placeholder="Nome do Hábito" onChange={(e) => setHabito(e.target.value)} value={habito}/>
+            <div className="dias">{dias.map((d,i)=> <Botao data-test="habit-day" disabled={disabled} selecionado={selecionados.includes(i+1)} key={i} onClick={() => handleSelecionados(i+1)}>{d}</Botao>)}</div>
+            <div className="botoes"><button data-test="habit-create-cancel-btn" disabled={disabled} onClick={() => setMenu(false)}>Cancelar</button><button data-test="habit-create-save-btn" disabled={disabled} onClick={criarHabito}>Salvar</button></div>
 
         </Container>
     )
