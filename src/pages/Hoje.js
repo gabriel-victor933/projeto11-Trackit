@@ -13,10 +13,12 @@ const Hoje = () => {
     
     const data = {dia: dayjs().locale("br").format('DD/MM'), week: dayjs().day()}
 
-    const { today, carregarHoje, porc} = useContext(AppContext)
+    const { today, carregarHoje, porc, carregarUsuario} = useContext(AppContext)
 
     useEffect(()=>{
+        carregarUsuario()
         carregarHoje()
+        
     },[])
 
     function weekDay(i){

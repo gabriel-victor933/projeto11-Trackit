@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import Reset from "./style/Reset";
 import GlobalStyle from "./style/GlobalStyle";
 import PaginaInicial from "./pages/PaginaInicial";
@@ -9,7 +8,11 @@ import Habitos from "./pages/Habitos";
 import Historico from "./pages/Historico";
 
 
+
 export default function App() {
+
+
+
   return (
       <BrowserRouter>
       <Reset />

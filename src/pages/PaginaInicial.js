@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import logo from "../constant/images/logo.jpg"
 import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { URLlogin} from "../constant/urls"
 import axios from "axios"
 import {ThreeDots} from "react-loader-spinner"
@@ -16,7 +16,16 @@ const PaginaInicial = () => {
 
     const navigate = useNavigate()
 
-    const { setPerfil } = useContext(AppContext)
+    const { setPerfil, carregarUsuario } = useContext(AppContext)
+
+
+    useEffect(()=>{
+        if(carregarUsuario()){
+            navigate("/hoje")
+        }
+    },[])
+    
+  
 
 
     function handleSubmit(e){
@@ -28,8 +37,14 @@ const PaginaInicial = () => {
 
         axios.post(URLlogin,info)
         .then((res)=> {
-            setPerfil(res.data)
+            console.log(res.data)
+            console.log({image: res.data.image, token: res.data.token})
+            setPerfil({image: res.data.image, token: res.data.token})
             navigate("/hoje")
+            const usuario = JSON.stringify({image: res.data.image, token: res.data.token});
+
+            localStorage.setItem("usuario", usuario);
+
         })
         .catch((err) => {
             setDisabled(false)

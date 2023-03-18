@@ -16,20 +16,23 @@ const Habitos = () => {
     const [habito, setHabito] = useState("")
     const [selecionados, setSelecionados] = useState("")
 
-    const { config} = useContext(AppContext)
+    const { config, carregarHoje, carregarUsuario} = useContext(AppContext)
+
 
     function carregarHabitos(){
 
         axios.get(URLhabits,config)
         .then((dados) => {
             sethabitos(dados.data)
+            carregarHoje()
         })
         .catch((erro) => console.log(erro))
     }
 
     useEffect(()=>{
-
+        carregarUsuario()
         carregarHabitos()
+
 
     },[])
 

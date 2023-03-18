@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { URLhabits } from "./constant/urls"
 
@@ -18,12 +18,16 @@ const AppProvider = ({children}) => {
     }
 
     function carregarHoje(){
+        
         axios.get(`${URLhabits}/today`,config)
         .then((dados) => {
             setToday(dados.data)
             calcularConcluidos(dados.data)
         })
-        .catch((erro) => console.log(erro))
+        .catch((erro) => {
+            console.log(erro)
+            
+        })
 
     }
 
@@ -41,10 +45,25 @@ const AppProvider = ({children}) => {
         setPorc(Math.round((cont/dados.length)*100))
     }
 
+    function carregarUsuario(){
+        const infoUsuario = localStorage.getItem("usuario");
+
+        if(infoUsuario){
+          const Usuario = JSON.parse(infoUsuario)
+          setPerfil(Usuario)
+
+          config.headers.Authorization = `Bearer ${Usuario.token}`;
+
+          return true
+        }
+
+        return false
+    }
+
 
 
     return (
-        <AppContext.Provider value={{perfil, setPerfil, config, today, setToday, carregarHoje, porc }}>
+        <AppContext.Provider value={{perfil, setPerfil, config, today, setToday, carregarHoje, porc, carregarUsuario}}>
             {children}
         </AppContext.Provider>
     )

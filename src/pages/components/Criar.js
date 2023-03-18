@@ -32,8 +32,6 @@ const Criar = ({config, setMenu, habito, setHabito, selecionados, setSelecionado
         setDisabled(true)
         setMenu(true)
 
-        console.log(info,selecionados)
-
         axios.post(URLhabits,info,config)
         .then((dados)=> {
             setMenu(false)
