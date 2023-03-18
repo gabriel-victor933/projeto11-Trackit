@@ -43,7 +43,7 @@ const Habitos = () => {
                     <button data-test="habit-create-btn" onClick={() => setMenu(true)}><p>+</p></button>
                 </div>
 
-                {menu && <Criar carregarHabitos={carregarHabitos} config={config} setMenu={setMenu} habito={habito} setHabito={setHabito} selecionados={selecionados} setSelecionados={setSelecionados}/>}
+                {menu && <Criar carregarHabitos={carregarHabitos} config={config} setMenu={setMenu} habito={habito} setHabito={setHabito} selecionados={selecionados} setSelecionados={setSelecionados} setMenu={setMenu}/>}
 
                 <div className="lista">
                     {habitos.length === 0 ? <Nenhum /> : habitos.map((h)=> (<Habito key={h.id} habito={h} config={config} carregarHabitos={carregarHabitos}/>))}

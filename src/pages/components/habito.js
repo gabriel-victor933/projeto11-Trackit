@@ -26,7 +26,7 @@ const Habito = ({habito, config, carregarHabitos}) => {
     return (
         <Card data-test="habit-container">
             <h1 data-test="habit-name">{name}</h1>
-            <div>{dias.map((d,i)=> <Botao data-test="habit-day" selecionado={days.includes(i+1)} key={i}>{d}</Botao>)}</div>
+            <div>{dias.map((d,i)=> <Botao data-test="habit-day" selecionado={days.includes(i)} key={i}>{d}</Botao>)}</div>
             <div className="icone"><BsTrash data-test="habit-delete-btn" onClick={removerHabito}/></div>
         </Card>
     )

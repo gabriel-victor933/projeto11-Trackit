@@ -19,7 +19,6 @@ const Criar = ({config, setMenu, habito, setHabito, selecionados, setSelecionado
         } else {
             novo = novo.filter(i => i != indexDia)
         }
-
         setSelecionados(novo)
     }
 
@@ -31,8 +30,9 @@ const Criar = ({config, setMenu, habito, setHabito, selecionados, setSelecionado
         }
 
         setDisabled(true)
+        setMenu(true)
 
-        console.log(info)
+        console.log(info,selecionados)
 
         axios.post(URLhabits,info,config)
         .then((dados)=> {
