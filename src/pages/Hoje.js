@@ -104,9 +104,10 @@ const Tela = styled.div`
 
 const Porcetagem = (porc) => {
 
-    if(porc == 0){
-        return (<p data-test="today-counter" className="nenhum">Nenhum hábito concluído ainda</p>)
+    if(porc > 0){
+        return (<p data-test="today-counter" className="porc">{porc}% dos hábitos concluídos</p>)
     } 
-
-    return (<p data-test="today-counter" className="porc">{porc}% dos hábitos concluídos</p>)
+    
+    return (<p data-test="today-counter" className="nenhum">Nenhum hábito concluído ainda</p>)
+    
 }
