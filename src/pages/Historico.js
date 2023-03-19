@@ -1,19 +1,67 @@
 import Footer from "./components/Footer"
 import Header from "./components/Header"
 import styled from "styled-components"
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import dayjs from "dayjs";
+import { useState, useContext, useEffect } from "react";
+import { AppContext } from "../Context";
+import axios from "axios";
+import { URLhistory } from "../constant/urls";
 
 
 const Historico = () => {
+    
+    const [historico, setHistorico] = useState()
+
+    const { config, carregarUsuario } = useContext(AppContext)
+
+    useEffect(()=>{
+
+        carregarUsuario()
+
+        axios.get(URLhistory,config)
+        .then((dados)=> {
+            setHistorico(dados.data)
+        })
+        .catch((erro)=>console.log(erro))
+    },[])
+
+    function modificarDia(date){
+        
+        if(historico == undefined) return "dia"
+
+        const dia = dayjs(date).format('DD/MM/YYYY')
+
+        const even = (e) => e.day == dia
+
+        const checkDone = (e) => e.done == false
+
+        const index = historico.findIndex(even)
+
+        if(index != -1){
 
 
+            if(historico[index].habits.some(checkDone)){
+                return "dia undone"
+            }
 
+            return "dia done"
+        }
+
+    
+
+        return "dia"
+
+        
+    }
 
     return (
             <>
             <Header />
             <Tela>
                 <h1>Histórico</h1>
-                <p>Em breve você poderá ver o histórico dos seus hábitos aqui!</p>
+                <Calendar className="calendario" tileClassName={({ date}) => modificarDia(date)} />
             </Tela>
             <Footer /> 
             </>
@@ -53,5 +101,30 @@ const Tela = styled.div`
         line-height: 22px;
 
         color: #666666;
+    }
+
+    .calendario {
+        border-radius: 10px;
+        border: none;
+        height: 400px;
+        
+    }
+
+    .dia {
+        font-size: 15px;
+        margin: 13px 0px;
+        
+    }
+
+    .done {
+        background-color: green;
+        border-radius: 30px;
+    }
+
+    .undone {
+        
+        background-color: red;
+        border-radius: 30px;
+        color: black;
     }
 `;
