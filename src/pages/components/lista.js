@@ -54,7 +54,7 @@ const Texto = styled.div`
         line-height: 22px;
         text-align: left;
         margin: 9px 0px;
-        color: ${props => props.feito == true ? "#ea5766" : "#8cc654"};
+        color: ${props => props.feito == true ? "#8cc654" : "#ea5766"};
 
         span{
             text-decoration: underline;
