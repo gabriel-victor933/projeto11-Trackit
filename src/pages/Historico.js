@@ -1,5 +1,6 @@
 import Footer from "./components/Footer"
 import Header from "./components/Header"
+import Lista from "./components/lista";
 import styled from "styled-components"
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -13,6 +14,7 @@ import { URLhistory } from "../constant/urls";
 const Historico = () => {
     
     const [historico, setHistorico] = useState()
+    const [dia, setDia] = useState()
 
     const { config, carregarUsuario } = useContext(AppContext)
 
@@ -56,12 +58,35 @@ const Historico = () => {
         
     }
 
+    function handleClick(date){
+
+        if(historico == undefined) return "dia"
+
+        const dia = dayjs(date).format('DD/MM/YYYY')
+
+        const even = (e) => e.day == dia
+
+        const index = historico.findIndex(even)
+
+        if(index != -1){
+            
+            setDia(historico[index].habits)
+            return
+        }
+
+        setDia([])
+
+    }
+
+    console.log(dia)
+
     return (
             <>
             <Header />
             <Tela>
                 <h1>Histórico</h1>
-                <Calendar className="calendario" tileClassName={({ date}) => modificarDia(date)} />
+                <Calendar onClickDay={(date) => handleClick(date)} className="calendario" tileClassName={({ date}) => modificarDia(date)} />
+                <Lista dia={dia} />
             </Tela>
             <Footer /> 
             </>
@@ -117,13 +142,13 @@ const Tela = styled.div`
     }
 
     .done {
-        background-color: green;
+        background-color: #8cc654;
         border-radius: 30px;
     }
 
     .undone {
         
-        background-color: red;
+        background-color: #ea5766;
         border-radius: 30px;
         color: black;
     }
