@@ -85,7 +85,7 @@ const Historico = () => {
             <Header />
             <Tela>
                 <h1>Histórico</h1>
-                <Calendar onClickDay={(date) => handleClick(date)} className="calendario" tileClassName={({ date}) => modificarDia(date)} />
+                <Calendar data-test="calendar" onClickDay={(date) => handleClick(date)} className="calendario" tileClassName={({ date}) => modificarDia(date)} />
                 <Lista dia={dia} />
             </Tela>
             <Footer /> 
