@@ -12,26 +12,26 @@ import { URLhistory } from "../constant/urls";
 
 
 const Historico = () => {
-    
+
     const [historico, setHistorico] = useState()
     const [dia, setDia] = useState()
 
     const { config, carregarUsuario } = useContext(AppContext)
 
-    useEffect(()=>{
+    useEffect(() => {
 
         carregarUsuario()
 
-        axios.get(URLhistory,config)
-        .then((dados)=> {
-            setHistorico(dados.data)
-        })
-        .catch((erro)=>console.log(erro))
-    },[])
+        axios.get(URLhistory, config)
+            .then((dados) => {
+                setHistorico(dados.data)
+            })
+            .catch((erro) => console.log(erro))
+    }, [])
 
-    function modificarDia(date){
-        
-        if(historico == undefined) return "dia"
+    function modificarDia(date) {
+
+        if (historico == undefined) return "dia"
 
         const dia = dayjs(date).format('DD/MM/YYYY')
 
@@ -41,26 +41,26 @@ const Historico = () => {
 
         const index = historico.findIndex(even)
 
-        if(index != -1){
+        if (index != -1) {
 
 
-            if(historico[index].habits.some(checkDone)){
+            if (historico[index].habits.some(checkDone)) {
                 return "dia undone"
             }
 
             return "dia done"
         }
 
-    
+
 
         return "dia"
 
-        
+
     }
 
-    function handleClick(date){
+    function handleClick(date) {
 
-        if(historico == undefined) return "dia"
+        if (historico == undefined) return "dia"
 
         const dia = dayjs(date).format('DD/MM/YYYY')
 
@@ -68,8 +68,8 @@ const Historico = () => {
 
         const index = historico.findIndex(even)
 
-        if(index != -1){
-            
+        if (index != -1) {
+
             setDia(historico[index].habits)
             return
         }
@@ -79,15 +79,15 @@ const Historico = () => {
     }
 
     return (
-            <>
+        <>
             <Header />
-            <Tela>
+            <Tela data-test="calendar">
                 <h1>Histórico</h1>
-                <Calendar data-test="calendar" onClickDay={(date) => handleClick(date)} className="calendario" tileClassName={({ date}) => modificarDia(date)} />
+                <Calendar data-test="calendar" onClickDay={(date) => handleClick(date)} className="calendario" tileClassName={({ date }) => modificarDia(date)} />
                 <Lista dia={dia} />
             </Tela>
-            <Footer /> 
-            </>
+            <Footer />
+        </>
     )
 }
 
