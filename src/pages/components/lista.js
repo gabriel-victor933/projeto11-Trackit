@@ -13,7 +13,6 @@ const Lista = ({dia}) =>{
 
     const diaFormat = dayjs(dia[0].date).format('DD/MM/YYYY')
 
-    console.log(diaFormat)
 
     return (
         <Block>

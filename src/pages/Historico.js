@@ -78,8 +78,6 @@ const Historico = () => {
 
     }
 
-    console.log(dia)
-
     return (
             <>
             <Header />
