@@ -6,52 +6,54 @@ import { useContext } from "react"
 import { AppContext } from "../../Context"
 
 
-const HabitoHoje = ({habito, carregarHoje})=>{
+const HabitoHoje = ({ habito, carregarHoje }) => {
 
-    const {config} = useContext(AppContext)
-    
+    const { config } = useContext(AppContext)
 
-    function checkHabit(){
+
+    function checkHabit() {
 
         const body = {}
 
-        if(habito.done === false){
+        if (habito.done === false) {
 
             axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habito.id}/check`, null, config)
-            .then((dados) => {
-                console.log(dados);
-                carregarHoje();
-            })
-            .catch((erro) => console.log(erro))
+                .then((dados) => {
+                    console.log(dados);
+                    carregarHoje();
+                })
+                .catch((erro) => console.log(erro))
         } else {
 
             axios.post(`${URLhabits}/${habito.id}/uncheck`, body, config)
-            .then((dados) => {
-                console.log(dados);
-                carregarHoje();
-            })
-            .catch((erro) => console.log(erro))
+                .then((dados) => {
+                    console.log(dados);
+                    carregarHoje();
+                })
+                .catch((erro) => console.log(erro))
         }
 
-        
+
     }
 
-    function checkAtual(){
-        if(habito.currentSequence === habito.highestSequence && habito.currentSequence > 0){
+    function checkAtual() {
+        if (habito.currentSequence == habito.highestSequence && habito.currentSequence > 0) {
+            console.log("teste")
             return true
         }
-
+        console.log("teste")
         return false
+
     }
 
     return (
-        <Card done={habito.done} check={checkAtual} data-test="today-habit-container">
+        <Card done={habito.done} check={habito.currentSequence == habito.highestSequence && habito.currentSequence > 0} data-test="today-habit-container">
             <div>
                 <h2 data-test="today-habit-name">{habito.name}</h2>
                 <p data-test="today-habit-sequence">Sequência atual: <span className="atual">{habito.currentSequence} dias</span></p>
                 <p data-test="today-habit-record">Seu recorde: <span className="check">{habito.highestSequence} dias</span></p>
             </div>
-            <BsFillCheckSquareFill data-test="today-habit-check-btn" color={habito.done ? "#8FC549" : "#EBEBEB"} size="69px" onClick={checkHabit}/>
+            <BsFillCheckSquareFill data-test="today-habit-check-btn" color={habito.done ? "#8FC549" : "#EBEBEB"} size="69px" onClick={checkHabit} />
         </Card>
     )
 }
@@ -97,11 +99,11 @@ const Card = styled.div`
         color: #666666;
 
         .atual {
-            color: ${props => props.done == true  ? "#8FC549": "#666666"}
+            color: ${props => props.done == true ? "#8FC549" : "#666666"}
         }
 
         .check {
-            color: ${props => props.done == true  ? "#8FC549": "#666666"}
+            color: ${props => props.check == true ? "#8FC549" : "#666666"}
         }
     }
     }
