@@ -27,7 +27,7 @@ const Criar = ({ setMenu, habito, setHabito, selecionados, setSelecionados }) =>
 
     function criarHabito(){
 
-        const info = {
+        const novo = {
             name: habito,
             days: selecionados// segunda, quarta e sexta
         }
@@ -37,7 +37,7 @@ const Criar = ({ setMenu, habito, setHabito, selecionados, setSelecionados }) =>
 
 
 
-        axios.post(URLhabits,info,info)
+        axios.post(URLhabits,novo,info)
         .then((dados)=> {
 
             
