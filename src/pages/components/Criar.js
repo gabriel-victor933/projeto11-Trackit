@@ -1,15 +1,18 @@
 import styled from "styled-components"
-import {useState} from "react"
+import {useContext, useState} from "react"
 import { URLhabits } from "../../constant/urls"
 import axios from "axios"
+import dayjs from "dayjs"
+import { AppContext } from "../../Context"
 
-const Criar = ({config, setMenu, habito, setHabito, selecionados, setSelecionados, sethabitos,habitos}) => {
+
+const Criar = ({ setMenu, habito, setHabito, selecionados, setSelecionados }) => {
 
     const [disabled, setDisabled] = useState(false)
     const dias = ["D", "S","T","Q", "Q", "S","S"]
 
     
-
+    const {config,sethabitos,habitos, porc, setPorc, today,setToday } = useContext(AppContext)
     function handleSelecionados(indexDia){
         let novo = [...selecionados]
 
@@ -47,7 +50,28 @@ const Criar = ({config, setMenu, habito, setHabito, selecionados, setSelecionado
 
             const newHabitos = [...habitos,{...info,id: dados.data.id}]
 
+            
+
+            if(dados.data.days.includes(dayjs().day())){
+
+                const newEntry = {
+                    "id": dados.data.id,
+                    "name": dados.data.name,
+                    "done": false,
+                    "currentSequence": 0,
+                    "highestSequence": 0
+                }
+
+                today.push(newEntry)
+                setToday([...today])
+                porc.total += 1
+                setPorc({...porc})
+
+            }
+
             sethabitos(newHabitos)
+
+
 
         })
         .catch((erro) => {

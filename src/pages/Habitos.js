@@ -15,9 +15,10 @@ const Habitos = () => {
     const [habito, setHabito] = useState("")
     const [selecionados, setSelecionados] = useState("")
 
-    const { config, carregarHabitos, habitos, sethabitos} = useContext(AppContext)
+    const {carregarHabitos, habitos} = useContext(AppContext)
 
-
+    
+    
     useEffect(()=>{
         carregarHabitos()
     },[])
@@ -32,10 +33,10 @@ const Habitos = () => {
                     <button data-test="habit-create-btn" onClick={() => setMenu(true)}><p>+</p></button>
                 </div>
 
-                {menu && <Criar habitos={habitos} sethabitos={sethabitos} config={config} setMenu={setMenu} habito={habito} setHabito={setHabito} selecionados={selecionados} setSelecionados={setSelecionados}/>}
+                {menu && <Criar setMenu={setMenu} habito={habito} setHabito={setHabito} selecionados={selecionados} setSelecionados={setSelecionados}/>}
 
                 <div className="lista">
-                    {habitos.length === 0 ? <Nenhum /> : habitos.map((h)=> (<Habito habitos={habitos} sethabitos={sethabitos} key={h.id} habito={h} config={config} carregarHabitos={carregarHabitos}/>))}
+                    {habitos.length === 0 ? <Nenhum /> : habitos.map((h)=> (<Habito key={h.id} habito={h} />))}
                 </div>
             </Tela>
             <Footer /> 

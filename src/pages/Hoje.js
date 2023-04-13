@@ -41,7 +41,7 @@ const Hoje = () => {
             <h1 data-test="today">{weekDay(data.week)}, {data.dia}</h1>
             <Porcetagem/>
             <div className="lista">
-                {today.map((h,i) => (<HabitoHoje key={h.id} habito={h}/>))}
+                {today.map((h,i) => (<HabitoHoje key={h.id} habito={h} index={i}/>))}
             </div>
         </Tela>
         <Footer />

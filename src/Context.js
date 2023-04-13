@@ -99,10 +99,8 @@ const AppProvider = ({children}) => {
         
     },[])
 
-    console.log(habitos)
-
     return (
-        <AppContext.Provider value={{habitos, sethabitos,carregarHabitos, carregarHistorico, historico,perfil, setPerfil, config, today, setToday, carregarHoje, porc, carregarUsuario,setPorc}}>
+        <AppContext.Provider value={{calcularConcluidos, habitos, sethabitos,carregarHabitos, carregarHistorico, historico,perfil, setPerfil, config, today, setToday, carregarHoje, porc, carregarUsuario,setPorc}}>
             {children}
         </AppContext.Provider>
     )

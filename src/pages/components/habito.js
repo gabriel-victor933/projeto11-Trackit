@@ -2,21 +2,40 @@ import styled from "styled-components"
 import { BsTrash } from "react-icons/bs";
 import { URLhabits } from "../../constant/urls";
 import axios from "axios";
+import dayjs from "dayjs";
+import { useContext } from "react";
+import { AppContext } from "../../Context";
 
-const Habito = ({habito, config, habitos,sethabitos}) => {
+const Habito = ({habito}) => {
 
     const {id, name, days} = habito
 
     const dias = ["D", "S","T","Q", "Q", "S","S"]
+
+    const {config, habitos,sethabitos, today, setToday, calcularConcluidos} = useContext(AppContext)
+
 
     function removerHabito(){
         
         if(!window.confirm(`remover o Habito ${name}`)) return 0
 
         const newhabitos = habitos.filter(h => h.id !== id)
+        
+
+        //verificar se o habito removido é para hoje
+
+
+        if(habito.days.includes(dayjs().day())){
+            const newToday = today.filter((h) => h.id !== habito.id )
+            
+            calcularConcluidos(newToday)
+            setToday(newToday)
+
+
+        } 
+
 
         sethabitos(newhabitos)
-
         axios.delete(`${URLhabits}/${id}`,config)
         .then((dados)=> {
         })

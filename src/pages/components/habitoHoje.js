@@ -8,12 +8,17 @@ import { useEffect } from "react"
 import { useState } from "react"
 
 
-const HabitoHoje = ({habito}) => {
+const HabitoHoje = ({habito,index}) => {
+
+
+    const {today, setToday} = useContext(AppContext)
 
 
     const [instacia,setInstacia] = useState({...habito,render: false })
+
     
     const { config, setPorc, porc } = useContext(AppContext)
+
 
     useEffect(()=>{
 
@@ -22,14 +27,14 @@ const HabitoHoje = ({habito}) => {
 
         if(!instacia.render) return
 
-        if (instacia.done === true) {
+        if (today[index].done === true) {
 
             axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habito.id}/check`, body, config)
                 .then((dados) => {
                     
                 })
                 .catch((erro) => console.log(erro))
-        } else if(instacia.done === false){
+        } else if(today[index].done === false){
             axios.post(`${URLhabits}/${habito.id}/uncheck`, body, config)
                 .then((dados) => {
                     
@@ -41,41 +46,47 @@ const HabitoHoje = ({habito}) => {
 
     },[instacia]) 
 
-    function handleClick(){
+    function handleClick(index){
+
+        const newToday = [...today]
 
         const  nova = {...instacia}
+
+        
         const novaPorc = {...porc}
 
-        if(nova.done){
-            nova.done = false
-            nova.currentSequence -= 1
+        if(newToday[index].done){
+            newToday[index].done = false;
+            newToday[index].currentSequence -= 1
+
 
             novaPorc.done -= 1;
 
-            modifyrecord(nova, "sub")
 
         } else {
-            nova.done = true
-            nova.currentSequence += 1
             novaPorc.done += 1;
 
-            modifyrecord(nova, "add")
+            newToday[index].done = true;
+            newToday[index].currentSequence += 1
+
 
         }
 
-        if(!nova.render){
-            nova.render = true
-
+        if(!instacia.render){
             
+            nova.render = true
+            
+         
         }
 
 
         setInstacia(nova)
         setPorc(novaPorc)
+        setToday(newToday)
 
     }
 
-    function modifyrecord(nova,menu){
+/*     function modifyrecord(nova,menu){
 
         if(menu === "add" && nova.currentSequence >= nova.highestSequence){
             nova.highestSequence = nova.currentSequence;
@@ -85,18 +96,18 @@ const HabitoHoje = ({habito}) => {
             nova.highestSequence -= 1
         }
 
-    }
+    } */
 
     
 
     return (
-        <Card done={instacia.done} check={habito.currentSequence === instacia.highestSequence && instacia.currentSequence > 0} data-test="today-habit-container">
+        <Card done={today[index].done} check={today[index].currentSequence === today[index].highestSequence && today[index].currentSequence > 0} data-test="today-habit-container">
             <div>
-                <h2 data-test="today-habit-name">{instacia.name}</h2>
-                <p data-test="today-habit-sequence">Sequência atual: <span className="atual">{instacia.currentSequence} dias</span></p>
-                <p data-test="today-habit-record">Seu recorde: <span className="check">{instacia.highestSequence} dias</span></p>
+                <h2 data-test="today-habit-name">{today[index].name}</h2>
+                <p data-test="today-habit-sequence">Sequência atual: <span className="atual">{today[index].currentSequence} dias</span></p>
+                <p data-test="today-habit-record">Seu recorde: <span className="check">{today[index].highestSequence} dias</span></p>
             </div>
-            <BsFillCheckSquareFill data-test="today-habit-check-btn" color={instacia.done ? "#8FC549" : "#EBEBEB"} size="69px" onClick={handleClick} />
+            <BsFillCheckSquareFill data-test="today-habit-check-btn" color={today[index].done ? "#8FC549" : "#EBEBEB"} size="69px" onClick={() => handleClick(index)} />
         </Card> 
     )
 }
