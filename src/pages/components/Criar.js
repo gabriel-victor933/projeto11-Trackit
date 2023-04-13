@@ -3,7 +3,7 @@ import {useState} from "react"
 import { URLhabits } from "../../constant/urls"
 import axios from "axios"
 
-const Criar = ({config, setMenu, habito, setHabito, selecionados, setSelecionados, carregarHabitos}) => {
+const Criar = ({config, setMenu, habito, setHabito, selecionados, setSelecionados, sethabitos,habitos}) => {
 
     const [disabled, setDisabled] = useState(false)
     const dias = ["D", "S","T","Q", "Q", "S","S"]
@@ -32,13 +32,22 @@ const Criar = ({config, setMenu, habito, setHabito, selecionados, setSelecionado
         setDisabled(true)
         setMenu(true)
 
+
+
         axios.post(URLhabits,info,config)
         .then((dados)=> {
+
+            
+
+            console.log(dados)
             setMenu(false)
             setHabito("")
             setSelecionados([])
-            carregarHabitos()
             setDisabled(false)
+
+            const newHabitos = [...habitos,{...info,id: dados.data.id}]
+
+            sethabitos(newHabitos)
 
         })
         .catch((erro) => {

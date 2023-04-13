@@ -49,7 +49,7 @@ const Cadastro = () =>{
             <input data-test="user-image-input" type="url" placeholder="foto" required onChange={(e) => setImage(e.target.value)} value={image} disabled={disabled}/> 
 
             <button data-test="signup-input" type="submit" disabled={disabled}>{
-                disabled == false ? "Cadastrar" : <ThreeDots height="50" width="50" radius="9" color="#ffffff" ariaLabel="three-dots-loading" wrapperStyle={{}}wrapperClassName="" visible={true}/>
+                disabled === false ? "Cadastrar" : <ThreeDots height="50" width="50" radius="9" color="#ffffff" ariaLabel="three-dots-loading" wrapperStyle={{}}wrapperClassName="" visible={true}/>
         }</button>
         </form>
 

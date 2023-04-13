@@ -8,25 +8,16 @@ import dayjs from "dayjs";
 import { useState, useContext, useEffect } from "react";
 import { AppContext } from "../Context";
 import axios from "axios";
-import { URLhistory } from "../constant/urls";
 
 
 const Historico = () => {
 
-    const [historico, setHistorico] = useState()
     const [dia, setDia] = useState()
 
-    const { config, carregarUsuario } = useContext(AppContext)
+    const { carregarHistorico, historico } = useContext(AppContext)
 
     useEffect(() => {
-
-        carregarUsuario()
-
-        axios.get(URLhistory, config)
-            .then((dados) => {
-                setHistorico(dados.data)
-            })
-            .catch((erro) => console.log(erro))
+        carregarHistorico()
     }, [])
 
     function modificarDia(date) {

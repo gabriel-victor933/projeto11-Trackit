@@ -3,7 +3,7 @@ import { BsTrash } from "react-icons/bs";
 import { URLhabits } from "../../constant/urls";
 import axios from "axios";
 
-const Habito = ({habito, config, carregarHabitos}) => {
+const Habito = ({habito, config, habitos,sethabitos}) => {
 
     const {id, name, days} = habito
 
@@ -13,9 +13,12 @@ const Habito = ({habito, config, carregarHabitos}) => {
         
         if(!window.confirm(`remover o Habito ${name}`)) return 0
 
+        const newhabitos = habitos.filter(h => h.id !== id)
+
+        sethabitos(newhabitos)
+
         axios.delete(`${URLhabits}/${id}`,config)
         .then((dados)=> {
-            carregarHabitos()
         })
         .catch((erro)=> {
             alert(`Não foi possivel excluir o habito ${erro.response.data.message}`)

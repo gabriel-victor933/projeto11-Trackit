@@ -1,6 +1,9 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext,  useState } from "react";
 import axios from "axios";
 import { URLhabits } from "./constant/urls"
+import { useEffect } from "react";
+import { URLhistory } from "./constant/urls";
+
 
 
 const AppContext = createContext({})
@@ -9,7 +12,10 @@ const AppProvider = ({children}) => {
 
     const [perfil, setPerfil] = useState({})
     const [today, setToday] = useState([])
-    const [porc,setPorc] = useState(0)
+    const [porc,setPorc] = useState({done:0,total:0})
+    const [historico, setHistorico] = useState()
+    const [habitos, sethabitos] = useState([])
+
 
     const config = {
         headers: {
@@ -33,16 +39,17 @@ const AppProvider = ({children}) => {
 
     function calcularConcluidos(dados){
 
-        
+
         let cont = 0;
         for(let i = 0; i < dados.length; i++){
             if(dados[i].done){
                 cont++;
-                
+    
             }
         }
 
-        setPorc(Math.round((cont/dados.length)*100))
+        const novo = {done: cont,total:dados.length}
+        setPorc(novo)
     }
 
     function carregarUsuario(){
@@ -60,10 +67,42 @@ const AppProvider = ({children}) => {
         return false
     }
 
+    function carregarHistorico(){
 
+        axios.get(URLhistory, config)
+            .then((dados) => {
+                setHistorico(dados.data)
+                
+            })
+            .catch((erro) => console.log(erro))
+
+    }
+
+    function carregarHabitos(){
+
+        axios.get(URLhabits,config)
+        .then((dados) => {
+            sethabitos(dados.data)
+            carregarHoje()
+        })
+        .catch((erro) => console.log(erro))
+    }
+
+    
+
+    useEffect(()=>{
+
+        carregarUsuario()
+        carregarHoje()
+        carregarHistorico()
+        carregarHabitos()
+        
+    },[])
+
+    console.log(habitos)
 
     return (
-        <AppContext.Provider value={{perfil, setPerfil, config, today, setToday, carregarHoje, porc, carregarUsuario}}>
+        <AppContext.Provider value={{habitos, sethabitos,carregarHabitos, carregarHistorico, historico,perfil, setPerfil, config, today, setToday, carregarHoje, porc, carregarUsuario,setPorc}}>
             {children}
         </AppContext.Provider>
     )

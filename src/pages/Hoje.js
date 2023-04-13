@@ -1,24 +1,22 @@
 import Footer from "./components/Footer"
 import Header from "./components/Header"
 import styled from "styled-components"
-
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import { AppContext } from "../Context"
 import dayjs from "dayjs"
 import HabitoHoje from "./components/habitoHoje"
+import Porcetagem from "./components/Porcetagem"
 
 
 const Hoje = () => {
-
     
     const data = {dia: dayjs().locale("br").format('DD/MM'), week: dayjs().day()}
 
-    const { today, carregarHoje, porc, carregarUsuario} = useContext(AppContext)
+    const {today, carregarHoje} = useContext(AppContext)
+
 
     useEffect(()=>{
-        carregarUsuario()
         carregarHoje()
-        
     },[])
 
     function weekDay(i){
@@ -41,9 +39,9 @@ const Hoje = () => {
         <Header />
         <Tela>
             <h1 data-test="today">{weekDay(data.week)}, {data.dia}</h1>
-            {Porcetagem(porc)}
+            <Porcetagem/>
             <div className="lista">
-                {today.map((h) => (<HabitoHoje key={h.id} habito={h} carregarHoje={carregarHoje}/>))}
+                {today.map((h,i) => (<HabitoHoje key={h.id} habito={h}/>))}
             </div>
         </Tela>
         <Footer />
@@ -102,12 +100,3 @@ const Tela = styled.div`
 `;
 
 
-const Porcetagem = (porc) => {
-
-    if(porc > 0){
-        return (<p data-test="today-counter" className="porc">{porc}% dos hábitos concluídos</p>)
-    } 
-    
-    return (<p data-test="today-counter" className="nenhum">Nenhum hábito concluído ainda</p>)
-    
-}

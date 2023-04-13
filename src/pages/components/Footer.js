@@ -8,13 +8,14 @@ import { AppContext } from "../../Context";
 const Footer = () => {
 
     const {porc} = useContext(AppContext)
+    
 
     return (
         <Menu data-test="menu">
             <Link data-test="habit-link" to="/habitos">Hábitos</Link>
             <Link data-test="today-link" to="/hoje" className="progress-bar">
                 <CircularProgressbar
-                    value={porc}
+                    value={porc.total === 0 ? 100 : (porc.done/porc.total)*100}
                     text={"hoje"}
                     background
                     backgroundPadding={6}

@@ -11,29 +11,15 @@ import Criar from "./components/Criar"
 
 const Habitos = () => {
 
-    const [habitos, sethabitos] = useState([])
     const [menu, setMenu] = useState(false)
     const [habito, setHabito] = useState("")
     const [selecionados, setSelecionados] = useState("")
 
-    const { config, carregarHoje, carregarUsuario} = useContext(AppContext)
+    const { config, carregarHabitos, habitos, sethabitos} = useContext(AppContext)
 
-
-    function carregarHabitos(){
-
-        axios.get(URLhabits,config)
-        .then((dados) => {
-            sethabitos(dados.data)
-            carregarHoje()
-        })
-        .catch((erro) => console.log(erro))
-    }
 
     useEffect(()=>{
-        carregarUsuario()
         carregarHabitos()
-
-
     },[])
 
 
@@ -46,10 +32,10 @@ const Habitos = () => {
                     <button data-test="habit-create-btn" onClick={() => setMenu(true)}><p>+</p></button>
                 </div>
 
-                {menu && <Criar carregarHabitos={carregarHabitos} config={config} setMenu={setMenu} habito={habito} setHabito={setHabito} selecionados={selecionados} setSelecionados={setSelecionados} setMenu={setMenu}/>}
+                {menu && <Criar habitos={habitos} sethabitos={sethabitos} config={config} setMenu={setMenu} habito={habito} setHabito={setHabito} selecionados={selecionados} setSelecionados={setSelecionados}/>}
 
                 <div className="lista">
-                    {habitos.length === 0 ? <Nenhum /> : habitos.map((h)=> (<Habito key={h.id} habito={h} config={config} carregarHabitos={carregarHabitos}/>))}
+                    {habitos.length === 0 ? <Nenhum /> : habitos.map((h)=> (<Habito habitos={habitos} sethabitos={sethabitos} key={h.id} habito={h} config={config} carregarHabitos={carregarHabitos}/>))}
                 </div>
             </Tela>
             <Footer /> 

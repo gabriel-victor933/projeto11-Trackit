@@ -4,57 +4,100 @@ import axios from "axios"
 import { URLhabits } from "../../constant/urls"
 import { useContext } from "react"
 import { AppContext } from "../../Context"
+import { useEffect } from "react"
+import { useState } from "react"
 
 
-const HabitoHoje = ({ habito, carregarHoje }) => {
-
-    const { config } = useContext(AppContext)
+const HabitoHoje = ({habito}) => {
 
 
-    function checkHabit() {
+    const [instacia,setInstacia] = useState({...habito,render: false })
+    
+    const { config, setPorc, porc } = useContext(AppContext)
+
+    useEffect(()=>{
+
 
         const body = {}
 
-        if (habito.done === false) {
+        if(!instacia.render) return
 
-            axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habito.id}/check`, null, config)
+        if (instacia.done === true) {
+
+            axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habito.id}/check`, body, config)
                 .then((dados) => {
-                    console.log(dados);
-                    carregarHoje();
+                    
                 })
                 .catch((erro) => console.log(erro))
-        } else {
-
+        } else if(instacia.done === false){
             axios.post(`${URLhabits}/${habito.id}/uncheck`, body, config)
                 .then((dados) => {
-                    console.log(dados);
-                    carregarHoje();
+                    
                 })
                 .catch((erro) => console.log(erro))
+        } 
+        
+
+
+    },[instacia]) 
+
+    function handleClick(){
+
+        const  nova = {...instacia}
+        const novaPorc = {...porc}
+
+        if(nova.done){
+            nova.done = false
+            nova.currentSequence -= 1
+
+            novaPorc.done -= 1;
+
+            modifyrecord(nova, "sub")
+
+        } else {
+            nova.done = true
+            nova.currentSequence += 1
+            novaPorc.done += 1;
+
+            modifyrecord(nova, "add")
+
+        }
+
+        if(!nova.render){
+            nova.render = true
+
+            
         }
 
 
+        setInstacia(nova)
+        setPorc(novaPorc)
+
     }
 
-    function checkAtual() {
-        if (habito.currentSequence == habito.highestSequence && habito.currentSequence > 0) {
-            console.log("teste")
-            return true
+    function modifyrecord(nova,menu){
+
+        if(menu === "add" && nova.currentSequence >= nova.highestSequence){
+            nova.highestSequence = nova.currentSequence;
         }
-        console.log("teste")
-        return false
+
+        if(menu=== "sub" && nova.currentSequence + 1  === nova.highestSequence){
+            nova.highestSequence -= 1
+        }
 
     }
+
+    
 
     return (
-        <Card done={habito.done} check={habito.currentSequence == habito.highestSequence && habito.currentSequence > 0} data-test="today-habit-container">
+        <Card done={instacia.done} check={habito.currentSequence === instacia.highestSequence && instacia.currentSequence > 0} data-test="today-habit-container">
             <div>
-                <h2 data-test="today-habit-name">{habito.name}</h2>
-                <p data-test="today-habit-sequence">Sequência atual: <span className="atual">{habito.currentSequence} dias</span></p>
-                <p data-test="today-habit-record">Seu recorde: <span className="check">{habito.highestSequence} dias</span></p>
+                <h2 data-test="today-habit-name">{instacia.name}</h2>
+                <p data-test="today-habit-sequence">Sequência atual: <span className="atual">{instacia.currentSequence} dias</span></p>
+                <p data-test="today-habit-record">Seu recorde: <span className="check">{instacia.highestSequence} dias</span></p>
             </div>
-            <BsFillCheckSquareFill data-test="today-habit-check-btn" color={habito.done ? "#8FC549" : "#EBEBEB"} size="69px" onClick={checkHabit} />
-        </Card>
+            <BsFillCheckSquareFill data-test="today-habit-check-btn" color={instacia.done ? "#8FC549" : "#EBEBEB"} size="69px" onClick={handleClick} />
+        </Card> 
     )
 }
 
@@ -99,11 +142,11 @@ const Card = styled.div`
         color: #666666;
 
         .atual {
-            color: ${props => props.done == true ? "#8FC549" : "#666666"}
+            color: ${props => props.done === true ? "#8FC549" : "#666666"}
         }
 
         .check {
-            color: ${props => props.check == true ? "#8FC549" : "#666666"}
+            color: ${props => props.check === true ? "#8FC549" : "#666666"}
         }
     }
     }
