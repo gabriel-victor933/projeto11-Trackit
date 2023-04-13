@@ -48,7 +48,7 @@ const Criar = ({ setMenu, habito, setHabito, selecionados, setSelecionados }) =>
             setSelecionados([])
             setDisabled(false)
 
-            const newHabitos = [...habitos,{...info,id: dados.data.id}]
+            const newHabitos = [...habitos,{...novo,id: dados.data.id}]
 
             
 
