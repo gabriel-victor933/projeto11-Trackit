@@ -1,10 +1,8 @@
 import Footer from "./components/Footer"
 import Header from "./components/Header"
 import styled from "styled-components"
-import { URLhabits } from "../constant/urls"
 import { useEffect, useContext, useState } from "react"
 import { AppContext } from "../Context"
-import axios from "axios"
 import Habito from "./components/habito"
 import Criar from "./components/Criar"
 

@@ -16,16 +16,10 @@ const PaginaInicial = () => {
 
     const navigate = useNavigate()
 
-    const { setPerfil, carregarUsuario } = useContext(AppContext)
+    const { setPerfil, setInfo } = useContext(AppContext)
 
 
-    useEffect(()=>{
-        if(carregarUsuario()){
-            navigate("/hoje")
-        }
-    },[])
     
-  
 
 
     function handleSubmit(e){
@@ -37,10 +31,11 @@ const PaginaInicial = () => {
 
         axios.post(URLlogin,info)
         .then((res)=> {
-            console.log(res.data)
-            console.log({image: res.data.image, token: res.data.token})
+
             setPerfil({image: res.data.image, token: res.data.token})
+            setInfo({headers: { "Authorization": `Bearer ${res.data.token}`}})
             navigate("/hoje")
+
             const usuario = JSON.stringify({image: res.data.image, token: res.data.token});
 
             localStorage.setItem("usuario", usuario);

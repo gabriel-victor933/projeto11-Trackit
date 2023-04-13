@@ -12,7 +12,7 @@ const Habito = ({habito}) => {
 
     const dias = ["D", "S","T","Q", "Q", "S","S"]
 
-    const {config, habitos,sethabitos, today, setToday, calcularConcluidos} = useContext(AppContext)
+    const {info, habitos,sethabitos, today, setToday, calcularConcluidos} = useContext(AppContext)
 
 
     function removerHabito(){
@@ -36,7 +36,7 @@ const Habito = ({habito}) => {
 
 
         sethabitos(newhabitos)
-        axios.delete(`${URLhabits}/${id}`,config)
+        axios.delete(`${URLhabits}/${id}`,info)
         .then((dados)=> {
         })
         .catch((erro)=> {

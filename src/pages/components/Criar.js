@@ -12,7 +12,7 @@ const Criar = ({ setMenu, habito, setHabito, selecionados, setSelecionados }) =>
     const dias = ["D", "S","T","Q", "Q", "S","S"]
 
     
-    const {config,sethabitos,habitos, porc, setPorc, today,setToday } = useContext(AppContext)
+    const {info,sethabitos,habitos, porc, setPorc, today,setToday } = useContext(AppContext)
     function handleSelecionados(indexDia){
         let novo = [...selecionados]
 
@@ -37,7 +37,7 @@ const Criar = ({ setMenu, habito, setHabito, selecionados, setSelecionados }) =>
 
 
 
-        axios.post(URLhabits,info,config)
+        axios.post(URLhabits,info,info)
         .then((dados)=> {
 
             

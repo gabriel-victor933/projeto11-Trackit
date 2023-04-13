@@ -17,7 +17,7 @@ const HabitoHoje = ({habito,index}) => {
     const [instacia,setInstacia] = useState({...habito,render: false })
 
     
-    const { config, setPorc, porc } = useContext(AppContext)
+    const { info, setPorc, porc } = useContext(AppContext)
 
 
     useEffect(()=>{
@@ -29,13 +29,13 @@ const HabitoHoje = ({habito,index}) => {
 
         if (today[index].done === true) {
 
-            axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habito.id}/check`, body, config)
+            axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habito.id}/check`, body, info)
                 .then((dados) => {
                     
                 })
                 .catch((erro) => console.log(erro))
         } else if(today[index].done === false){
-            axios.post(`${URLhabits}/${habito.id}/uncheck`, body, config)
+            axios.post(`${URLhabits}/${habito.id}/uncheck`, body, info)
                 .then((dados) => {
                     
                 })
